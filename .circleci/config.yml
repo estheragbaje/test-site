@@ -1,14 +1,22 @@
 version: 2.1
 
 jobs:
-  quality:
+  install:
     docker:
       - image: cimg/base:stable
     steps:
-      - quality
-      - run:
-          name: Build
-          command: yarn build
-      - run:
-          name: Lint
-          command: yarn lint
+      - run: yarn install
+
+  build:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run: yarn build
+
+workflows:
+  Quality:
+    jobs:
+      - install
+      - build:
+          requires:
+            - install
