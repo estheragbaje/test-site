@@ -1,0 +1,14 @@
+version: 2.1
+
+jobs:
+  quality:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - quality
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Lint
+          command: yarn lint
